@@ -1,5 +1,5 @@
 from patterns.csv_utils import Ride
-
+from print_reporter import console_reporter, TabsFormatting
 
 def create_content(rides):
     builder = [_create_headers("Taxi Report"), _create_table_headers()]
@@ -7,8 +7,12 @@ def create_content(rides):
         builder.append(_add_ride(ride))
     builder.append(_close_table_headers())
 
-    return "".join(builder)
+    content = "\n".join(builder)  # Unir con saltos de línea
 
+    console_reporter.set_formatting_strategy(TabsFormatting())
+    console_reporter.display_report(content)
+
+    return content
 
 def create_file(content: str):
     with open("financial-report.html", "w") as file:
